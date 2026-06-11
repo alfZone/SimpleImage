@@ -12,82 +12,69 @@
 //
 //  Licensed under the MIT license <http://opensource.org/licenses/MIT>
 //
+// Ver 2.0
 
-//__construct($image = '')	$image - (opcional) Caminho do ficheiro ou data URI da imagem	Cria um novo objeto SimpleImage e carrega uma imagem se for fornecida
-//__destruct()	Nenhum	Destrói o recurso da imagem quando o objeto é eliminado
-/////  Loaders (Carregar imagens)
-//fromDataUri($uri)	$uri - Data URI da imagem	Carrega uma imagem a partir de uma data URI
-//fromFile($file)	$file - Caminho do ficheiro da imagem	Carrega uma imagem a partir de um ficheiro
-//fromNew($width, $height, $color = 'transparent')	$width - Largura, $height - Altura, $color - Cor de preenchimento	Cria uma nova imagem em branco com as dimensões especificadas
-//fromString($string)	$string - Dados brutos da imagem como string	Carrega uma imagem a partir de uma string de dados
-
-///// Savers (Guardar/Exportar imagens)
-//toDataUri($mimeType = null, $quality = 100)	$mimeType - Formato da imagem, $quality - Qualidade (0-100)	Gera uma data URI da imagem
-//toDownload($filename, $mimeType = null, $quality = 100)	$filename - Nome do ficheiro, $mimeType - Formato, $quality - Qualidade	Força o download da imagem no computador do cliente
-toFile($file, $mimeType = null, $quality = 100)	$file - Caminho de destino, $mimeType - Formato, $quality - Qualidade	Guarda a imagem num ficheiro
-toScreen($mimeType = null, $quality = 100)	$mimeType - Formato, $quality - Qualidade	Envia a imagem diretamente para o ecrã/browser
-toString($mimeType = null, $quality = 100)	$mimeType - Formato, $quality - Qualidade	Retorna a imagem como string
-📐 Informação (Getters)
-Função	Parâmetros	O que faz
-getAspectRatio()	Nenhum	Retorna a proporção (largura/altura) da imagem
-getExif()	Nenhum	Retorna os dados EXIF da imagem (ou null se não existirem)
-getHeight()	Nenhum	Retorna a altura atual da imagem em pixels
-getMimeType()	Nenhum	Retorna o tipo MIME da imagem carregada
-getOrientation()	Nenhum	Retorna a orientação: 'landscape', 'portrait' ou 'square'
-getResolution()	Nenhum	Retorna a resolução da imagem como array [horizontal, vertical]
-getWidth()	Nenhum	Retorna a largura atual da imagem em pixels
-✂️ Manipulação
-Função	Parâmetros	O que faz
-autoOrient()	Nenhum	Rotaciona a imagem automaticamente com base nos dados EXIF
-bestFit($maxWidth, $maxHeight)	$maxWidth - Largura máxima, $maxHeight - Altura máxima	Redimensiona proporcionalmente para caber dentro das dimensões máximas
-crop($x1, $y1, $x2, $y2)	$x1,$y1 - Canto superior esquerdo, $x2,$y2 - Canto inferior direito	Corta a imagem nas coordenadas especificadas
-duotone($lightColor, $darkColor)	$lightColor - Cor mais clara, $darkColor - Cor mais escura	Aplica um filtro duotone à imagem
-fitToHeight($height)	$height - Altura desejada	Deprecated - Redimensiona proporcionalmente para uma altura específica
-fitToWidth($width)	$width - Largura desejada	Deprecated - Redimensiona proporcionalmente para uma largura específica
-flip($direction)	$direction - Direção: 'x', 'y' ou 'both'	Inverte a imagem horizontalmente, verticalmente ou ambos
-maxColors($max, $dither = true)	$max - Nº máximo de cores, $dither - Usar dithering	Reduz a imagem para um número máximo de cores
-overlay($overlay, $anchor = 'center', $opacity = 1, $xOffset = 0, $yOffset = 0, $calculateOffsetFromEdge = false)	$overlay - Imagem a sobrepor, $anchor - Ponto de ancoragem, $opacity - Opacidade (0-1), $xOffset,$yOffset - Deslocamento	Coloca uma imagem sobre a imagem atual
-resize($width = null, $height = null)	$width - Nova largura, $height - Nova altura	Redimensiona a imagem (se apenas um for passado, mantém proporção)
-resolution($res_x, $res_y = null)	$res_x - Resolução horizontal DPI, $res_y - Resolução vertical DPI	Define a resolução da imagem em DPI
-rotate($angle, $backgroundColor = 'transparent')	$angle - Ângulo (-360 a 360), $backgroundColor - Cor de fundo	Rotaciona a imagem pelo ângulo especificado
-text($text, $options, &$boundary = null)	$text - Texto, $options - Array com opções (fontFile, size, color, anchor, etc.), $boundary - Referência para coordenadas	Adiciona texto à imagem
-textBox($text, $options)	$text - Texto, $options - Array com opções (width, align, leading, etc.)	Adiciona texto com quebra de linha automática
-thumbnail($width, $height, $anchor = 'center')	$width - Largura miniatura, $height - Altura miniatura, $anchor - Ponto de ancoragem	Cria uma miniatura recortada para o tamanho exato
-🎨 Desenho
-Função	Parâmetros	O que faz
-arc($x, $y, $width, $height, $start, $end, $color, $thickness = 1)	$x,$y - Centro, $width,$height - Dimensões, $start,$end - Ângulos, $color - Cor, $thickness - Espessura ou 'filled'	Desenha um arco/elipse parcial
-border($color, $thickness = 1)	$color - Cor da borda, $thickness - Espessura	Desenha uma borda à volta da imagem
-dot($x, $y, $color)	$x,$y - Coordenadas, $color - Cor	Desenha um único pixel
-ellipse($x, $y, $width, $height, $color, $thickness = 1)	$x,$y - Centro, $width,$height - Dimensões, $color - Cor, $thickness - Espessura ou 'filled'	Desenha uma elipse
-fill($color)	$color - Cor de preenchimento	Preenche toda a imagem com uma cor sólida
-line($x1, $y1, $x2, $y2, $color, $thickness = 1)	$x1,$y1 - Ponto inicial, $x2,$y2 - Ponto final, $color - Cor, $thickness - Espessura	Desenha uma linha
-polygon($vertices, $color, $thickness = 1)	$vertices - Array com pontos [['x'=>x1,'y'=>y1],...], $color - Cor, $thickness - Espessura ou 'filled'	Desenha um polígono
-rectangle($x1, $y1, $x2, $y2, $color, $thickness = 1)	$x1,$y1 - Canto superior esquerdo, $x2,$y2 - Canto inferior direito, $color - Cor, $thickness - Espessura ou 'filled'	Desenha um retângulo
-roundedRectangle($x1, $y1, $x2, $y2, $radius, $color, $thickness = 1)	$x1,$y1 - Canto superior esquerdo, $x2,$y2 - Canto inferior direito, $radius - Raio das bordas, $color - Cor, $thickness - Espessura ou 'filled'	Desenha um retângulo com cantos arredondados
-🔍 Filtros
-Função	Parâmetros	O que faz
-blur($type = 'gaussian', $passes = 1)	$type - 'gaussian' ou 'selective', $passes - Nº de aplicações	Aplica efeito de desfoque
-brighten($percentage)	$percentage - Percentagem (0-100)	Clareia a imagem
-colorize($color)	$color - Cor do filtro	Aplica filtro de colorização
-contrast($percentage)	$percentage - Percentagem (-100 a 100)	Ajusta o contraste
-darken($percentage)	$percentage - Percentagem (0-100)	Escurece a imagem
-desaturate()	Nenhum	Converte para escala de cinzentos
-edgeDetect()	Nenhum	Aplica deteção de bordas
-emboss()	Nenhum	Aplica efeito de relevo
-invert()	Nenhum	Inverte as cores
-opacity($opacity)	$opacity - Opacidade (0-1)	Altera o nível de opacidade
-pixelate($size = 10)	$size - Tamanho dos blocos	Aplica efeito pixelizado
-sepia()	Nenhum	Aplica efeito sépia
-sharpen($amount = 50)	$amount - Intensidade (0-100)	Aplica efeito de nitidez
-sketch()	Nenhum	Aplica efeito de esboço
-🎨 Utilitários de Cor
-Função	Parâmetros	O que faz
-adjustColor($color, $red, $green, $blue, $alpha)	$color - Cor original, $red,$green,$blue,$alpha - Ajustes (-255 a 255)	Ajusta valores de cor (estático)
-darkenColor($color, $amount)	$color - Cor, $amount - Quantidade (0-255)	Escurece uma cor (estático)
-extractColors($count = 5, $backgroundColor = null)	$count - Nº de cores, $backgroundColor - Cor de fundo	Extrai as cores principais da imagem
-getColorAt($x, $y)	$x,$y - Coordenadas	Obtém a cor de um pixel específico
-lightenColor($color, $amount)	$color - Cor, $amount - Quantidade (0-255)	Clareia uma cor (estático)
-normalizeColor($color)	$color - Cor (nome, hex, array)	Normaliza qualquer formato de cor para RGBA (estático)
+// __construct($image = '')	Cria um novo objeto SimpleImage e carrega uma imagem se for fornecida. $image - (opcional) Caminho do ficheiro ou data URI da imagem
+// fromDataUri($uri)	Carrega uma imagem a partir de uma data URI. $uri - Data URI da imagem
+// fromFile($file)	Carrega uma imagem a partir de um ficheiro. $file - Caminho do ficheiro da imagem
+// fromNew($width, $height, $color = 'transparent')	Cria uma nova imagem em branco com as dimensões especificadas. $width - Largura, $height - Altura, $color - Cor de preenchimento
+// fromString($string)	Carrega uma imagem a partir de uma string de dados. $string - Dados brutos da imagem como string
+// toDataUri($mimeType = null, $quality = 100)	Gera uma data URI da imagem. $mimeType - Formato da imagem, $quality - Qualidade (0-100)
+// toDownload($filename, $mimeType = null, $quality = 100)	Força o download da imagem no computador do cliente. $filename - Nome do ficheiro, $mimeType - Formato, $quality - Qualidade
+// toFile($file, $mimeType = null, $quality = 100)	Guarda a imagem num ficheiro. $file - Caminho de destino, $mimeType - Formato, $quality - Qualidade
+// toScreen($mimeType = null, $quality = 100)	Envia a imagem diretamente para o ecrã/browser. $mimeType - Formato, $quality - Qualidade
+// toString($mimeType = null, $quality = 100)	Retorna a imagem como string. $mimeType - Formato, $quality - Qualidade
+// getAspectRatio()	Retorna a proporção (largura/altura) da imagem. Nenhum
+// getExif()	Retorna os dados EXIF da imagem ou null se não existirem. Nenhum
+// getHeight()	Retorna a altura atual da imagem em pixels. Nenhum
+// getMimeType()	Retorna o tipo MIME da imagem carregada. Nenhum
+// getOrientation()	Retorna a orientação: 'landscape', 'portrait' ou 'square'. Nenhum
+// getResolution()	Retorna a resolução da imagem como array [horizontal, vertical]. Nenhum
+// getWidth()	Retorna a largura atual da imagem em pixels. Nenhum
+// autoOrient()	Rotaciona a imagem automaticamente com base nos dados EXIF. Nenhum
+// bestFit($maxWidth, $maxHeight)	Redimensiona proporcionalmente para caber dentro das dimensões máximas. $maxWidth - Largura máxima, $maxHeight - Altura máxima
+// crop($x1, $y1, $x2, $y2)	Corta a imagem nas coordenadas especificadas. $x1,$y1 - Canto superior esquerdo, $x2,$y2 - Canto inferior direito
+// duotone($lightColor, $darkColor)	Aplica um filtro duotone à imagem. $lightColor - Cor mais clara, $darkColor - Cor mais escura
+// fitToHeight($height)	[Deprecated] Redimensiona proporcionalmente para uma altura específica. $height - Altura desejada
+// fitToWidth($width)	[Deprecated] Redimensiona proporcionalmente para uma largura específica. $width - Largura desejada
+// flip($direction)	Inverte a imagem horizontalmente, verticalmente ou ambos. $direction - Direção: 'x', 'y' ou 'both'
+// maxColors($max, $dither = true)	Reduz a imagem para um número máximo de cores. $max - Nº máximo de cores, $dither - Usar dithering
+// overlay($overlay, $anchor = 'center', $opacity = 1, $xOffset = 0, $yOffset = 0, $calculateOffsetFromEdge = false)	Coloca uma imagem sobre a imagem atual. $overlay - Imagem a sobrepor, $anchor - Ponto de ancoragem, $opacity - Opacidade (0-1), $xOffset,$yOffset - Deslocamento, $calculateOffsetFromEdge - Calcular offset a partir da borda
+// resize($width = null, $height = null)	Redimensiona a imagem (se apenas um for passado, mantém proporção). $width - Nova largura, $height - Nova altura
+// resolution($res_x, $res_y = null)	Define a resolução da imagem em DPI. $res_x - Resolução horizontal DPI, $res_y - Resolução vertical DPI
+// rotate($angle, $backgroundColor = 'transparent')	Rotaciona a imagem pelo ângulo especificado. $angle - Ângulo (-360 a 360), $backgroundColor - Cor de fundo
+// text($text, $options, &$boundary = null)	Adiciona texto à imagem. $text - Texto, $options - Array com opções (fontFile, size, color, anchor, etc.), $boundary - Referência para coordenadas
+// textBox($text, $options)	Adiciona texto com quebra de linha automática. $text - Texto, $options - Array com opções (width, align, leading, etc.)
+// thumbnail($width, $height, $anchor = 'center')	Cria uma miniatura recortada para o tamanho exato. $width - Largura miniatura, $height - Altura miniatura, $anchor - Ponto de ancoragem
+// arc($x, $y, $width, $height, $start, $end, $color, $thickness = 1)	Desenha um arco/elipse parcial. $x,$y - Centro, $width,$height - Dimensões, $start,$end - Ângulos, $color - Cor, $thickness - Espessura ou 'filled'
+// border($color, $thickness = 1)	Desenha uma borda à volta da imagem. $color - Cor da borda, $thickness - Espessura
+// dot($x, $y, $color)	Desenha um único pixel. $x,$y - Coordenadas, $color - Cor
+// ellipse($x, $y, $width, $height, $color, $thickness = 1)	Desenha uma elipse. $x,$y - Centro, $width,$height - Dimensões, $color - Cor, $thickness - Espessura ou 'filled'
+// fill($color)	Preenche toda a imagem com uma cor sólida. $color - Cor de preenchimento
+// line($x1, $y1, $x2, $y2, $color, $thickness = 1)	Desenha uma linha. $x1,$y1 - Ponto inicial, $x2,$y2 - Ponto final, $color - Cor, $thickness - Espessura
+// polygon($vertices, $color, $thickness = 1)	Desenha um polígono. $vertices - Array com pontos [['x'=>x1,'y'=>y1],...], $color - Cor, $thickness - Espessura ou 'filled'
+// rectangle($x1, $y1, $x2, $y2, $color, $thickness = 1)	Desenha um retângulo. $x1,$y1 - Canto superior esquerdo, $x2,$y2 - Canto inferior direito, $color - Cor, $thickness - Espessura ou 'filled'
+// roundedRectangle($x1, $y1, $x2, $y2, $radius, $color, $thickness = 1)	Desenha um retângulo com cantos arredondados. $x1,$y1 - Canto superior esquerdo, $x2,$y2 - Canto inferior direito, $radius - Raio das bordas, $color - Cor, $thickness - Espessura ou 'filled'
+// blur($type = 'gaussian', $passes = 1)	Aplica efeito de desfoque. $type - 'gaussian' ou 'selective', $passes - Nº de aplicações
+// brighten($percentage)	Clareia a imagem. $percentage - Percentagem (0-100)
+// colorize($color)	Aplica filtro de colorização. $color - Cor do filtro
+// contrast($percentage)	Ajusta o contraste. $percentage - Percentagem (-100 a 100)
+// darken($percentage)	Escurece a imagem. $percentage - Percentagem (0-100)
+// desaturate()	Converte para escala de cinzentos. Nenhum
+// edgeDetect()	Aplica deteção de bordas. Nenhum
+// emboss()	Aplica efeito de relevo. Nenhum
+// invert()	Inverte as cores. Nenhum
+// opacity($opacity)	Altera o nível de opacidade. $opacity - Opacidade (0-1)
+// pixelate($size = 10)	Aplica efeito pixelizado. $size - Tamanho dos blocos
+// sepia()	Aplica efeito sépia. Nenhum
+// sharpen($amount = 50)	Aplica efeito de nitidez. $amount - Intensidade (0-100)
+// sketch()	Aplica efeito de esboço. Nenhum
+// extractColors($count = 5, $backgroundColor = null)	Extrai as cores principais da imagem. $count - Nº de cores, $backgroundColor - Cor de fundo
+// getColorAt($x, $y)	Obtém a cor de um pixel específico. $x,$y - Coordenadas
+// adjustColor($color, $red, $green, $blue, $alpha)	Ajusta valores de cor (estático). $color - Cor original, $red,$green,$blue,$alpha - Ajustes (-255 a 255)
+// darkenColor($color, $amount)	Escurece uma cor (estático). $color - Cor, $amount - Quantidade (0-255)
+// lightenColor($color, $amount)	Clareia uma cor (estático). $color - Cor, $amount - Quantidade (0-255)
+// normalizeColor($color)	Normaliza qualquer formato de cor para RGBA (estático). $color - Cor (nome, hex, array)
 
 namespace claviska;
 
